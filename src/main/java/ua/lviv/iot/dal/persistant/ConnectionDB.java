@@ -16,24 +16,12 @@ public class ConnectionDB {
 
     public static Connection getConnection() {
         try {
-                connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            connection = DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException sqlException) {
             System.out.println("SQL Exception:" + sqlException.getMessage());
             System.out.println("SQL State:" + sqlException.getSQLState());
             System.out.println("Vendor Error:" + sqlException.getErrorCode());
         }
         return connection;
-    }
-
-    public static void closeConnection() {
-        if (connection != null) {
-            try {
-                connection.close();
-            } catch (SQLException sqlException) {
-                System.out.println("SQL Exception:" + sqlException.getMessage());
-                System.out.println("SQL State:" + sqlException.getSQLState());
-                System.out.println("Vendor Error:" + sqlException.getErrorCode());
-            }
-        }
     }
 }

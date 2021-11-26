@@ -84,7 +84,7 @@ public class View {
                 System.out.println("3: Delete row");
                 System.out.println("4: Get row");
                 System.out.println("5: Get all rows");
-                System.out.println("E: Exit");
+                System.out.println("e: Exit");
                 String action = input.nextLine();
 
                 switch (action) {

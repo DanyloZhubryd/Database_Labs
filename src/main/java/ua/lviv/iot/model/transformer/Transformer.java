@@ -30,16 +30,7 @@ public class Transformer<Entity, Id>{
             String name = field.getAnnotation(Column.class).name();
             field.setAccessible(true);
             Class<?> fieldType = field.getType();
-            if (fieldType == String.class)
-                field.set(entity, resultSet.getString(name));
-            else if (fieldType == Integer.class)
-                field.set(entity, resultSet.getInt(name));
-            else if (fieldType == Float.class)
-                field.set(entity, resultSet.getDouble(name));
-            else if (fieldType == LocalDate.class)
-                field.set(entity, resultSet.getDate(name));
-            else if (fieldType == LocalTime.class)
-                field.set(entity, resultSet.getTime(name));
+            field.set(entity, resultSet.getObject(name, fieldType));
         }
         return entity;
     }
