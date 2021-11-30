@@ -1,12 +1,11 @@
 package ua.lviv.iot.dal.persistant;
 
-import lombok.NoArgsConstructor;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-@NoArgsConstructor
+
 public class ConnectionDB {
     private static final String URL = "jdbc:mysql://localhost:3306/mydb"
             +"?allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC";
