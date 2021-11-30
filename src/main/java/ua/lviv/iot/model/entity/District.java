@@ -3,7 +3,7 @@ package ua.lviv.iot.model.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Objects;
+import java.util.Collection;
 
 @Entity
 @Table(name = "district")
@@ -11,6 +11,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Getter
 @Setter
+@EqualsAndHashCode(of = "id")
 @ToString
 public class District {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,16 +21,17 @@ public class District {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        District district = (District) o;
-        return id != null && Objects.equals(id, district.id);
-    }
+    //references
+
+    @OneToMany(mappedBy = "district", fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private Collection<Address> addresses;
 
     @Override
-    public int hashCode() {
-        return getClass().hashCode();
+    public String toString() {
+        return "District{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

@@ -1,10 +1,7 @@
 package ua.lviv.iot.model.entity;
 
 import lombok.*;
-
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.util.Objects;
 
 @Entity
 @Table(name = "child")
@@ -12,7 +9,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
+@EqualsAndHashCode(of = "id")
 public class Child {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -28,21 +25,23 @@ public class Child {
     private String surname;
 
     @Column(name = "birth_date", nullable = false)
-    private LocalDate birthDate;
+    private String birthDate;
 
-    @Column(name = "child_group", nullable = false)
-    private Integer childGroup;
+    //foreign keys
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Child child = (Child) o;
-        return birthCertificate != null && Objects.equals(birthCertificate, child.birthCertificate);
-    }
+    @ManyToOne
+    @JoinColumn(name = "child_group_id", nullable = false)
+    private ChildGroup childGroup;
 
     @Override
-    public int hashCode() {
-        return getClass().hashCode();
+    public String toString() {
+        return "Child{" +
+                "id=" + id +
+                ", birthCertificate='" + birthCertificate + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", birthDate='" + birthDate + '\'' +
+                ", childGroup=" + childGroup +
+                '}';
     }
 }

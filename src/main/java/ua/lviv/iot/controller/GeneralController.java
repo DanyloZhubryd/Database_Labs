@@ -1,14 +1,14 @@
 package ua.lviv.iot.controller;
 
-import ua.lviv.iot.dal.dao.AbstractDAO;
+import ua.lviv.iot.model.dal.dao.AbstractDAO;
 
 import java.sql.SQLException;
 import java.util.List;
 
-public class GeneralController<Entity, Id> implements AbstractController<Entity, Id>{
-    private final AbstractDAO<Entity, Id> dao;
+public class GeneralController<Entity> implements AbstractController<Entity>{
+    private final AbstractDAO<Entity> dao;
 
-    public GeneralController(AbstractDAO<Entity, Id> dao){
+    public GeneralController(AbstractDAO<Entity> dao){
         this.dao = dao;
     }
 
@@ -18,17 +18,17 @@ public class GeneralController<Entity, Id> implements AbstractController<Entity,
     }
 
     @Override
-    public Entity get(Id id) throws SQLException {
+    public Entity get(Integer id) throws SQLException {
         return dao.get(id);
     }
 
     @Override
-    public boolean update(Id id, Entity entity) throws SQLException {
+    public boolean update(Integer id, Entity entity) throws SQLException {
         return dao.update(id, entity);
     }
 
     @Override
-    public boolean delete(Id id) throws SQLException {
+    public boolean delete(Integer id) throws SQLException {
         return dao.delete(id);
     }
 

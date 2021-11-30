@@ -3,8 +3,7 @@ package ua.lviv.iot.model.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.util.Objects;
+
 
 @Entity
 @Table(name = "worker")
@@ -12,7 +11,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
+@EqualsAndHashCode(of = "id")
 public class Worker {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -28,27 +27,38 @@ public class Worker {
     private String surname;
 
     @Column(name = "hire_date", nullable = false)
-    private LocalDate hireDate;
+    private String hireDate;
 
     @Column(name = "fire_date")
-    private LocalDate fireDate;
+    private String fireDate;
 
-    @Column(name = "kindergarden_id")
-    private Integer kindergardenId;
+    //foreign keys
+    @ManyToOne
+    @JoinColumn(name = "kindergarden_id", referencedColumnName = "id")
+    private Kindergarden kindergarden;
 
-    @Column(name = "position_id")
-    private Integer positionId;
+    @ManyToOne
+    @JoinColumn(name = "position_id", referencedColumnName = "id")
+    private Position position;
+
+    //references
+
+    @OneToOne(mappedBy = "worker")
+    private ChildGroup childGroup;
+
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Worker worker = (Worker) o;
-        return id != null && Objects.equals(id, worker.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
+    public String toString() {
+        return "Worker{" +
+                "id=" + id +
+                ", passport='" + passport + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", hireDate='" + hireDate + '\'' +
+                ", fireDate='" + fireDate + '\'' +
+                ", kindergarden=" + kindergarden +
+                ", position=" + position +
+                ", childGroup=" + childGroup +
+                '}';
     }
 }

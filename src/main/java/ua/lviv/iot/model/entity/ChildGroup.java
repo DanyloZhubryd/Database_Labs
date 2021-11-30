@@ -3,7 +3,9 @@ package ua.lviv.iot.model.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "child_group")
@@ -11,7 +13,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
+@EqualsAndHashCode(of = "id")
 public class ChildGroup {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -23,22 +25,36 @@ public class ChildGroup {
     @Column(name = "bedroom_number")
     private Integer bedroomNumber;
 
-    @Column(name = "kindergarden_id", nullable = false)
-    private Integer kindergardenId;
+    //foreign keys
 
-    @Column(name = "worker_passport", nullable = false)
-    private String workerPassport;
+    @ManyToOne
+    @JoinColumn(name = "kindergarden_id", referencedColumnName = "id", nullable = false)
+    private Kindergarden kindergarden;
+
+    @OneToOne
+    @JoinColumn(name = "worker_id", referencedColumnName = "id", nullable = false)
+    private Worker worker;
+
+    //references
+
+    @OneToMany(mappedBy = "childGroup", fetch = FetchType.LAZY)
+    private Collection<Child> children;
+
+    @ManyToMany
+    @JoinTable(name = "schedule",
+    joinColumns = @JoinColumn(name = "child_group_id"),
+    inverseJoinColumns = @JoinColumn(name = "lesson_id"))
+    @ToString.Exclude
+    private Set<Lesson> lessons;
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ChildGroup that = (ChildGroup) o;
-        return id != null && Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
+    public String toString() {
+        return "ChildGroup{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", bedroomNumber=" + bedroomNumber +
+                ", kindergarden=" + kindergarden +
+                ", worker=" + worker +
+                '}';
     }
 }

@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.LocalTime;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "lesson")
@@ -12,6 +13,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Getter
 @Setter
+@EqualsAndHashCode(of = "id")
 @ToString
 public class Lesson {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,19 +29,24 @@ public class Lesson {
     @Column(name = "lesson_day", nullable = false)
     private String lessonDay;
 
-    @Column(name = "lesson__time", nullable = false)
-    private LocalTime lessonTime;
+    @Column(name = "lesson_time", nullable = false)
+    private String lessonTime;
+
+    //references
+
+    @ManyToMany(mappedBy = "lessons")
+    @ToString.Exclude
+    private Set<ChildGroup> childGroups;
+
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Lesson lesson = (Lesson) o;
-        return id != null && Objects.equals(id, lesson.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
+    public String toString() {
+        return "Lesson{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", classroom=" + classroom +
+                ", lessonDay='" + lessonDay + '\'' +
+                ", lessonTime='" + lessonTime + '\'' +
+                '}';
     }
 }

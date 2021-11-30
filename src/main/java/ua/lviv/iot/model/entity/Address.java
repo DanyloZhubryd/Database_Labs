@@ -3,7 +3,7 @@ package ua.lviv.iot.model.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Objects;
+
 
 @Entity
 @Table(name = "address")
@@ -11,7 +11,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
+@EqualsAndHashCode(of = "id")
 public class Address {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -20,22 +20,28 @@ public class Address {
     @Column(name = "number", nullable = false)
     private String number;
 
-    @Column(name = "street_id", nullable = false)
-    private Integer streetId;
+    //foreign keys
 
-    @Column(name = "district_id", nullable = false)
-    private Integer districtId;
+    @ManyToOne
+    @JoinColumn(name = "street_id", referencedColumnName = "id", nullable = false)
+    private Street street;
+
+    @ManyToOne
+    @JoinColumn(name = "district_id", referencedColumnName = "id", nullable = false)
+    private District district;
+
+    //references
+
+    @OneToOne(mappedBy = "address")
+    private Kindergarden kindergarden;
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Address address = (Address) o;
-        return id != null && Objects.equals(id, address.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
+    public String toString() {
+        return "Address{" +
+                "id=" + id +
+                ", number='" + number + '\'' +
+                ", street=" + street +
+                ", district=" + district +
+                '}';
     }
 }
