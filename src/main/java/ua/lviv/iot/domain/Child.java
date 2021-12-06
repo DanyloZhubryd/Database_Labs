@@ -2,6 +2,7 @@ package ua.lviv.iot.domain;
 
 import lombok.*;
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "child")
@@ -13,7 +14,7 @@ import javax.persistence.*;
 public class Child {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private  Integer id;
+    private Integer id;
 
     @Column(name = "birth_certificate", nullable = false)
     private String birthCertificate;
@@ -25,7 +26,7 @@ public class Child {
     private String surname;
 
     @Column(name = "birth_date", nullable = false)
-    private String birthDate;
+    private LocalDate birthDate;
 
     //foreign keys
 

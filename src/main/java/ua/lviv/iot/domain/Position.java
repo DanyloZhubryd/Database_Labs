@@ -24,7 +24,10 @@ public class Position {
     @Column(name = "salary", nullable = false)
     private Float salary;
 
-    //refernces
+    @Column(name = "bonus")
+    private Float bonus;
+
+    //references
 
     @OneToMany(mappedBy = "position", fetch = FetchType.LAZY)
     private Collection<Worker> workers;
@@ -39,6 +42,7 @@ public class Position {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", salary=" + salary +
+                ", bonus=" + bonus +
                 '}';
     }
 }

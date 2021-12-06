@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalTime;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -29,7 +28,7 @@ public class Lesson {
     private String lessonDay;
 
     @Column(name = "lesson_time", nullable = false)
-    private String lessonTime;
+    private LocalTime lessonTime;
 
     //references
 

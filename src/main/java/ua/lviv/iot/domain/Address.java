@@ -1,9 +1,7 @@
 package ua.lviv.iot.domain;
 
 import lombok.*;
-
 import javax.persistence.*;
-
 
 @Entity
 @Table(name = "address")
@@ -17,7 +15,7 @@ public class Address {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "number", nullable = false)
+    @Column(name = "number", nullable = false, columnDefinition = "VARCHAR()")
     private String number;
 
     //foreign keys

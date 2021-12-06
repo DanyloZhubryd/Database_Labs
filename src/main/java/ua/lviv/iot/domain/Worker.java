@@ -3,6 +3,7 @@ package ua.lviv.iot.domain;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 
 @Entity
@@ -27,10 +28,10 @@ public class Worker {
     private String surname;
 
     @Column(name = "hire_date", nullable = false)
-    private String hireDate;
+    private LocalDate hireDate;
 
     @Column(name = "fire_date")
-    private String fireDate;
+    private LocalDate fireDate;
 
     //foreign keys
     @ManyToOne
