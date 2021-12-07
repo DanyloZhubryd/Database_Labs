@@ -36,7 +36,7 @@
 - to check API go to `http://localhost:8081/swagger-ui.html#/`:
   - Pick table
   - Pick method that you want to test
-  - Bype in body request in JSON format(if body required)
+  - Type in body for request in JSON format(if body required)
 - run checkstyle: `mvn checkstyle:check`
 - check for bugs `mvn findbugs:gui`
 - check for dublications in code `mvn pmd:pmd`
