@@ -34,9 +34,9 @@
 - package compiled code into .jar `mvn package`
 - run application: `java -cp target\Lab6-1.0-SNAPSHOT.jar ua.lviv.iot.App`
 - to check API go to `http://localhost:8081/swagger-ui.html#/`:
-- 1. Pick table
-- 2. Pick method that you want to test
-- 3. Bype in body request in JSON format(if body required)
+  1. Pick table
+  2. Pick method that you want to test
+  3. Bype in body request in JSON format(if body required)
 - run checkstyle: `mvn checkstyle:check`
 - check for bugs `mvn findbugs:gui`
 - check for dublications in code `mvn pmd:pmd`
