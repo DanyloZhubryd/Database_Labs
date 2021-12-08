@@ -1,6 +1,15 @@
 # Database_Labs
 
-## <a name="procedures"></a> SAVED PROCEDURES
+## Task
+1. Create a database (DB) with 3 normal
+forms. To ensure the integrity of the values used
+triggers instead of foreign keys. Database name in format:
+student's last name, laboratory number, option number,
+for example, Pavelchak_9_23.
+2. Fill in each database table at least 10 records (if
+the number of course is not limited by logic).
+3. Implement these software designs. 
+### <a name="procedures"></a> SAVED PROCEDURES
 1. Ensure parameterized insertion of new values in
 Students table.
 2. Output data from the connection table M: M between
@@ -16,7 +25,7 @@ one, or another additional table. Restart
 procedure again creates new similar tables in which
 the data from the table will be randomly scattered again
 Students.
-## CUSTOM FUNCTIONS <a name="functions"></a>
+### CUSTOM FUNCTIONS <a name="functions"></a>
 1. For the Students table write the function as it will search for AVG
 column Overall rating. Then sample the data
 (SELECT) greater than the average using this
@@ -25,7 +34,7 @@ function.
 City and Region are the combined values of the Region and Code fields
 area. Then make a sample of all data (SELECT) from the table
 City using this feature.
-## TRIGGERS <a name="triggers"></a>
+### TRIGGERS <a name="triggers"></a>
 1. <a name="triggers/fk"></a> Ensure the integrity of the values for the database structure.
 2. <a name="triggers/format"></a>for Students → Provide a student ticket number
 format: 'A' + 8 digits + any letter except S;
@@ -35,7 +44,7 @@ birth must be at least 16 years old.
 Group tables. 
 ## DATABASE STRUCTURE
 ![image](https://user-images.githubusercontent.com/74894799/145216229-993d0ea9-de52-43f7-983b-69b106a37d95.png)
-## FILES
+### FILES
 1. `ER_diagram.mwb` - database diagram
 2. `create_script.sql` - recreates database(drops all tables and recreates them)
 3. `inserts.sql` - inserts data into tables
