@@ -39,10 +39,10 @@ Group tables.
 1. `ER_diagram.mwb` - database diagram
 2. `create_script.sql` - recreates database(drops all tables and recreates them)
 3. `inserts.sql` - inserts data into tables
-4. `procedures.sql` - procedures that are described in [link Procedures](#procedures)
+4. `procedures.sql` - procedures that are described in [Procedures](#procedures)
 5. `procedures_calls.sql` - runs procedures
-6. `functions.sql` - functions that are described in [link Functions](#functions)
-7. `trigger_foreign_key_management.sql` - triggers that do foreign key logic and are decribed in [link Triggers](#triggers/fk)
-8. `triggers_student_identity_card.sql` - triigers that controlls the format of `student_identity_card` column and are described in [link Triggers](#triggers/format)
-9. `triggers_get_older.sql` - triggers that check if `student` is 16+yo, described in [link Triggers](#triggers/age)
-10. `trigger_max_rows_number_student_group.sql` - triggers that limit amount of rows in table `child_group` to 6, described in [link Triggers](#triggers/limit)
+6. `functions.sql` - functions that are described in [Functions](#functions)
+7. `trigger_foreign_key_management.sql` - triggers that do foreign key logic and are decribed in [Triggers](#triggers/fk)
+8. `triggers_student_identity_card.sql` - triigers that controlls the format of `student_identity_card` column and are described in [Triggers](#triggers/format)
+9. `triggers_get_older.sql` - triggers that check if `student` is 16+yo, described in [Triggers](#triggers/age)
+10. `trigger_max_rows_number_student_group.sql` - triggers that limit amount of rows in table `child_group` to 6, described in [Triggers](#triggers/limit)
