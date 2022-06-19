@@ -18,45 +18,57 @@ USE `mydb` ;
 -- Table `mydb`.`street`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `mydb`.`street` ;
+DROP TABLE IF EXISTS `mydb`.`district` ;
+DROP TABLE IF EXISTS `mydb`.`address` ;
+DROP TABLE IF EXISTS `mydb`.`kindergarden` ;
+DROP TABLE IF EXISTS `mydb`.`position` ;
+DROP TABLE IF EXISTS `mydb`.`worker` ;
+DROP TABLE IF EXISTS `mydb`.`child_group` ;
+DROP TABLE IF EXISTS `mydb`.`child` ;
+DROP TABLE IF EXISTS `mydb`.`lesson` ;
+DROP TABLE IF EXISTS `mydb`.`kindergarden_has_position` ;
+DROP TABLE IF EXISTS `mydb`.`schedule` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`street` (
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(50) NOT NULL,
-  PRIMARY KEY (`name`))
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
 -- Table `mydb`.`district`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`district` ;
+
 
 CREATE TABLE IF NOT EXISTS `mydb`.`district` (
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(50) NOT NULL,
-  PRIMARY KEY (`name`))
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
 -- Table `mydb`.`address`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`address` ;
+
 
 CREATE TABLE IF NOT EXISTS `mydb`.`address` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `number` VARCHAR(5) NOT NULL,
-  `street_name` VARCHAR(50) NOT NULL,
-  `district_name` VARCHAR(50) NOT NULL,
+  `street_id` INT NOT NULL,
+  `district_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_address_street1_idx` (`street_name` ASC) VISIBLE,
-  INDEX `fk_address_district1_idx` (`district_name` ASC) VISIBLE,
+  INDEX `fk_address_street1_idx` (`street_id` ASC) VISIBLE,
+  INDEX `fk_address_district1_idx` (`district_id` ASC) VISIBLE,
   CONSTRAINT `fk_address_street1`
-    FOREIGN KEY (`street_name`)
-    REFERENCES `mydb`.`street` (`name`)
+    FOREIGN KEY (`street_id`)
+    REFERENCES `mydb`.`street` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_address_district1`
-    FOREIGN KEY (`district_name`)
-    REFERENCES `mydb`.`district` (`name`)
+    FOREIGN KEY (`district_id`)
+    REFERENCES `mydb`.`district` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -65,7 +77,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `mydb`.`kindergarden`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`kindergarden` ;
+
 
 CREATE TABLE IF NOT EXISTS `mydb`.`kindergarden` (
   `id` INT NOT NULL AUTO_INCREMENT,
@@ -83,13 +95,10 @@ CREATE TABLE IF NOT EXISTS `mydb`.`kindergarden` (
 ENGINE = InnoDB;
 
 
-
-	
-
 -- -----------------------------------------------------
 -- Table `mydb`.`position`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`position` ;
+
 
 CREATE TABLE IF NOT EXISTS `mydb`.`position` (
   `id` INT NOT NULL AUTO_INCREMENT,
@@ -103,9 +112,10 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `mydb`.`worker`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`worker` ;
+
 
 CREATE TABLE IF NOT EXISTS `mydb`.`worker` (
+  `id` INT NOT NULL AUTO_INCREMENT,
   `passport` VARCHAR(9) NOT NULL,
   `name` VARCHAR(20) NOT NULL,
   `surname` VARCHAR(20) NOT NULL,
@@ -113,9 +123,9 @@ CREATE TABLE IF NOT EXISTS `mydb`.`worker` (
   `fire_date` DATE NULL DEFAULT NULL,
   `kindergarden_id` INT NULL DEFAULT NULL,
   `position_id` INT NULL,
-  PRIMARY KEY (`passport`),
   INDEX `fk_worker_kindergarden1_idx` (`kindergarden_id` ASC) VISIBLE,
   INDEX `fk_worker_position1_idx` (`position_id` ASC) VISIBLE,
+  PRIMARY KEY (`id`),
   CONSTRAINT `fk_worker_kindergarden1`
     FOREIGN KEY (`kindergarden_id`)
     REFERENCES `mydb`.`kindergarden` (`id`)
@@ -132,25 +142,25 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `mydb`.`child_group`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`child_group` ;
+
 
 CREATE TABLE IF NOT EXISTS `mydb`.`child_group` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(30) NULL DEFAULT NULL,
   `bedroom_number` INT NOT NULL,
   `kindergarden_id` INT NOT NULL,
-  `worker_passport` VARCHAR(9) NOT NULL,
+  `worker_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_child_group_kindergarden1_idx` (`kindergarden_id` ASC) VISIBLE,
-  INDEX `fk_child_group_worker1_idx` (`worker_passport` ASC) VISIBLE,
+  INDEX `fk_child_group_worker1_idx` (`worker_id` ASC) VISIBLE,
   CONSTRAINT `fk_child_group_kindergarden1`
     FOREIGN KEY (`kindergarden_id`)
     REFERENCES `mydb`.`kindergarden` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_child_group_worker1`
-    FOREIGN KEY (`worker_passport`)
-    REFERENCES `mydb`.`worker` (`passport`)
+    FOREIGN KEY (`worker_id`)
+    REFERENCES `mydb`.`worker` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -159,16 +169,17 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `mydb`.`child`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`child` ;
+
 
 CREATE TABLE IF NOT EXISTS `mydb`.`child` (
+  `id` INT NOT NULL AUTO_INCREMENT,
   `birth_certificate` VARCHAR(15) NOT NULL,
   `name` VARCHAR(20) NOT NULL,
   `surname` VARCHAR(20) NOT NULL,
   `birth_date` DATE NOT NULL,
   `child_group_id` INT NOT NULL,
-  PRIMARY KEY (`birth_certificate`),
   INDEX `fk_child_child_group1_idx` (`child_group_id` ASC) VISIBLE,
+  PRIMARY KEY (`id`),
   CONSTRAINT `fk_child_child_group1`
     FOREIGN KEY (`child_group_id`)
     REFERENCES `mydb`.`child_group` (`id`)
@@ -180,7 +191,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `mydb`.`lesson`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`lesson` ;
+
 
 CREATE TABLE IF NOT EXISTS `mydb`.`lesson` (
   `id` INT NOT NULL AUTO_INCREMENT,
@@ -195,7 +206,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `mydb`.`kindergarden_has_position`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`kindergarden_has_position` ;
+
 
 CREATE TABLE IF NOT EXISTS `mydb`.`kindergarden_has_position` (
   `kindergarden_id` INT NOT NULL,
@@ -219,8 +230,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `mydb`.`schedule`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`schedule` ;
-
 CREATE TABLE IF NOT EXISTS `mydb`.`schedule` (
   `child_group_id` INT NOT NULL,
   `lesson_id` INT NOT NULL,
@@ -239,8 +248,17 @@ CREATE TABLE IF NOT EXISTS `mydb`.`schedule` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
--- Inserts
+-- Indexes
+CREATE INDEX worker_name_surname_passport_idx
+ON worker(`name`, surname, passport);
 
+CREATE INDEX child_name_surname_birth_certificate_idx
+ON child(`name`, surname, birth_certificate);
+
+CREATE INDEX worker_passport_hire_date_idx
+ON worker(passport, hire_date);
+
+-- Inserts
 INSERT INTO street(`name`) VALUES
 ("Городоцька"), ("Стрийська"), ("Антоновича"),
 ("Замарстинівська"), ("Богдана Хмельницького"), ("Зелена"), 
@@ -250,13 +268,13 @@ INSERT INTO district(`name`) VALUES
 ("Шевченківський"), ("Галицький"), ("Залізничний"), 
 ("Сихівський"), ("Личаківський"), ("Франківський");
 
-INSERT INTO address(`number`, street_name, district_name) VALUES
-("32", "Івана Франка", "Франківський"), 
-("156", "Городоцька", "Залізничний"), 
-("56", "Пекарська", "Галицький"), 
-("137а", "Зелена", "Личаківський"), 
-("78", "Стрийська", "Сихівський"), 
-("42", "Івана Мазепи", "Шевченківський");
+INSERT INTO address(`number`, street_id, district_id) VALUES
+("32", 7, 6), 
+("156", 1, 3), 
+("56", 8, 2), 
+("137а", 6, 5), 
+("78", 2, 4), 
+("42", 9, 1);
 
 INSERT INTO kindergarden(flats_count, address_id) VALUES
 (2, 2),
@@ -296,13 +314,13 @@ INSERT INTO worker(passport, `name`, surname, hire_date, fire_date, kindergarden
 ("520821572", "Фотинія", "Покотило", '2013-08-15', null, 2, 5),
 ("146785884", "Ярина", "Рудченко", '2002-02-10', '2004-05-15', 5, 1);
 
-INSERT INTO child_group(`name`, bedroom_number, kindergarden_id, worker_passport) VALUES
-("Молодша група 1", 208, 1, "964650559"),
-("Страша група 1", 104, 1, "011111110"), 
-("Молодша група 2", 203, 5, "864378669"), 
-("Молодша група 3", 109, 6, "851265302"),
-("Страша група 2", 206, 5, "146785884"), 
-("Старша група 3", 301, 2, "689649222");
+INSERT INTO child_group(`name`, bedroom_number, kindergarden_id, worker_id) VALUES
+("Молодша група 1", 208, 1, 1),
+("Страша група 1", 104, 1, 10), 
+("Молодша група 2", 203, 5, 6), 
+("Молодша група 3", 109, 6, 8),
+("Страша група 2", 206, 5, 4), 
+("Старша група 3", 301, 2, 3);
 
 INSERT INTO child(birth_certificate, `name`, `surname`, `birth_date`, `child_group_id`)VALUES
 ("І-ВЛ 597684", "Юрій", "Ткачик", "2018-10-28", 1),
@@ -356,9 +374,8 @@ ON gr.kindergarden_id = id
 SET workers_count = w.worker_counter,
 group_count = gr.group_counter;
 
-
-
 SET SQL_SAFE_UPDATES = 1;
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
