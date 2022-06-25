@@ -28,6 +28,7 @@ bin/
 
 # Docker generated
 data/
+grafana/
 
 # Maven generated
 target/
