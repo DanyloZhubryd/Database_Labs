@@ -15,7 +15,7 @@ public class Address {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "number", nullable = false, columnDefinition = "VARCHAR()")
+    @Column(name = "number", nullable = false)
     private String number;
 
     //foreign keys

@@ -26,6 +26,9 @@ bin/
 .classpath
 .idea
 
+# Docker generated
+data/
+
 # Maven generated
 target/
 
